@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  socially-awkward-mongo:
+    image: mongo:5.0.16
+    container_name: socially-awkward-mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - socially-awkward-mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: socially-awkward
+
+volumes:
+  socially-awkward-mongo:
+
