@@ -15,6 +15,10 @@ export class PostsService {
   async create(createPostDto: CreatePostDto, authorId: string): Promise<Post> {
     const user = await this.usersService.findOneById(authorId);
 
+    if (!user) {
+      throw new Error('User not found');
+    }
+
     return this.postModel.create({
       ...createPostDto,
       authorId: user,
@@ -27,7 +31,6 @@ export class PostsService {
 
   async findOne(id: string): Promise<Post | null> {
     const post = await this.postModel.findById(id).populate('authorId').exec();
-
     return post;
   }
 
@@ -46,14 +49,15 @@ export class PostsService {
   }
 
   private async updateLikeCount(id: string, action: 'like' | 'unlike') {
-    const post = await this.postModel.findById(id);
+    const updatedPostResult = await this.postModel.updateOne(
+      { _id: id },
+      { $inc: { likes: action === 'like' ? 1 : -1 } },
+    );
 
-    if (!post) {
-      return null;
+    if (updatedPostResult.modifiedCount === 0) {
+      throw new Error('Post not found');
     }
 
-    post.likes = action === 'like' ? post.likes + 1 : post.likes - 1;
-
-    return post.save();
+    return this.findOne(id);
   }
 }
