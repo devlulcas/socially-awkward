@@ -1,0 +1,15 @@
+{
+  "name": "api-types",
+  "version": "0.0.1",
+  "description": "API types",
+  "main": "./index.d.ts",
+  "types": "./index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "@devlulcas",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
