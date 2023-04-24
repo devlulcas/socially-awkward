@@ -13,8 +13,8 @@ import {
 import { AuthGuard } from '../auth/auth.guard';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostsService } from './posts.service';
-import { Cookies } from 'src/common/http/cookies';
-import { OutputUserDto } from 'src/users/dto/output-user.dto';
+import { Cookies } from '../common/http/cookies';
+import { OutputUserDto } from '../users/dto/output-user.dto';
 import { PostMapper } from './post.mapper';
 
 @Controller('posts')

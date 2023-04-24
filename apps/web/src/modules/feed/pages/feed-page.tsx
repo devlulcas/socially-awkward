@@ -1,4 +1,4 @@
-import { Post } from '../components/post';
+import { Post } from '../../posts/components/post';
 
 export function FeedPage() {
   return (
