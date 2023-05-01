@@ -11,15 +11,11 @@ export class UsersService {
   ) {}
 
   async findOneByUsername(username: string): Promise<User | null> {
-    const user = await this.userModel.findOne({ username });
-
-    return user;
+    return this.userModel.findOne({ username });
   }
 
   async findOneById(id: string): Promise<User | null> {
-    const user = await this.userModel.findById(id);
-
-    return user;
+    return await this.userModel.findById(id);
   }
 
   async create(inputUser: CreateUserDto): Promise<User> {

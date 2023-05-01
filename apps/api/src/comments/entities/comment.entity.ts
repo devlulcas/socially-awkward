@@ -3,9 +3,12 @@ import { HydratedDocument } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 
 @Schema({ timestamps: true })
-export class Post {
+export class Comment {
   @Prop({ default: uuid })
   _id: string;
+
+  @Prop({ required: true })
+  postId: string;
 
   @Prop({
     required: true,
@@ -22,13 +25,7 @@ export class Post {
   };
 
   @Prop({ required: true })
-  title: string;
-
-  @Prop({ required: true })
   content: string;
-
-  @Prop({ default: 0 })
-  likes: number;
 
   @Prop({ default: Date.now })
   createdAt: Date;
@@ -37,6 +34,6 @@ export class Post {
   updatedAt: Date;
 }
 
-export const PostSchema = SchemaFactory.createForClass(Post);
+export const CommentSchema = SchemaFactory.createForClass(Comment);
 
-export type PostDocument = HydratedDocument<Post>;
+export type CommentDocument = HydratedDocument<Comment>;

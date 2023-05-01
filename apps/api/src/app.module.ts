@@ -9,6 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { envSchema } from './common/validation/env';
 import { JwtModule } from '@nestjs/jwt';
 import { PostsModule } from './posts/posts.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PostsModule } from './posts/posts.module';
     AuthModule,
     UsersModule,
     PostsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [{ provide: APP_PIPE, useClass: ZodValidation }],

@@ -5,7 +5,11 @@ export class PostMapper {
   static toOutputPostDto(post: Post): OutputPostDto {
     return {
       id: post._id,
-      authorId: post.authorId?._id,
+      author: {
+        id: post.author._id,
+        username: post.author.username,
+        profilePicture: post.author.profilePicture,
+      },
       title: post.title,
       content: post.content,
       likes: post.likes,

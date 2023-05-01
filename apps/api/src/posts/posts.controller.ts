@@ -11,11 +11,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
-import { CreatePostDto } from './dto/create-post.dto';
-import { PostsService } from './posts.service';
 import { Cookies } from '../common/http/cookies';
 import { OutputUserDto } from '../users/dto/output-user.dto';
+import { CreatePostDto } from './dto/create-post.dto';
 import { PostMapper } from './post.mapper';
+import { PostsService } from './posts.service';
 
 @Controller('posts')
 export class PostsController {
@@ -79,7 +79,7 @@ export class PostsController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Delete(':id/like')
+  @Post(':id/unlike')
   async unlike(@Param('id') id: string) {
     const post = await this.postsService.unlike(id);
 

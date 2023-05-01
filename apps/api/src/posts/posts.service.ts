@@ -21,17 +21,20 @@ export class PostsService {
 
     return this.postModel.create({
       ...createPostDto,
-      authorId: user,
+      author: {
+        _id: user._id,
+        username: user.username,
+        profilePicture: user.profilePicture,
+      },
     });
   }
 
   async findAll(): Promise<Post[]> {
-    return this.postModel.find().populate('authorId').exec();
+    return this.postModel.find();
   }
 
   async findOne(id: string): Promise<Post | null> {
-    const post = await this.postModel.findById(id).populate('authorId').exec();
-    return post;
+    return this.postModel.findById(id);
   }
 
   async remove(id: string): Promise<Post | null> {
