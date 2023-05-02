@@ -1,7 +1,4 @@
-api.socially-awkward.localhost {
-    reverse_proxy localhost:3000
-}
-
 socially-awkward.localhost {
+    reverse_proxy /api* localhost:3000
     reverse_proxy localhost:5173
 }
