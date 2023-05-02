@@ -1,5 +1,5 @@
 import { fetchThenParse } from './fetch-then-parse';
-import { userOutputSchema } from './outputs/user.output';
+import { userApiResponseSchema } from './outputs/user.output';
 
 export class UserModule {
   constructor(private readonly url: string) {}
@@ -7,7 +7,7 @@ export class UserModule {
   async getCurrentUser() {
     return fetchThenParse({
       input: `${this.url}/users/me`,
-      schema: userOutputSchema,
+      schema: userApiResponseSchema,
     });
   }
 }

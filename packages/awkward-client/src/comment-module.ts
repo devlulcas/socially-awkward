@@ -1,10 +1,13 @@
 import { fetchThenParse } from './fetch-then-parse';
-import { postOutputSchema } from './outputs/post.output';
+import {
+  commentApiResponseSchema,
+  commentArrayApiResponseSchema,
+} from './outputs/comment.output';
 
 export class CommentModule {
   constructor(private readonly url: string) {}
 
-  async createCommentOnPost(input: { postId: string; content: string }) {
+  async createCommentOnPost(input: { postId: string; body: string }) {
     return fetchThenParse({
       input: `${this.url}/comments`,
       init: {
@@ -12,14 +15,14 @@ export class CommentModule {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(input),
       },
-      schema: postOutputSchema,
+      schema: commentApiResponseSchema,
     });
   }
 
   async getCommentsFromPost(postId: string) {
     return fetchThenParse({
       input: `${this.url}/comments/${postId}`,
-      schema: postOutputSchema,
+      schema: commentArrayApiResponseSchema,
     });
   }
 

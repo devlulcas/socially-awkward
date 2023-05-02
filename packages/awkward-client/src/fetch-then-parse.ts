@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 type FetchThenParseOptions<T> = {
   input: RequestInfo | URL;
@@ -12,6 +12,10 @@ export async function fetchThenParse<T>(
   const res = await fetch(options.input, options.init);
 
   const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json.error + ': ' + json.message);
+  }
 
   if (!options.schema) return json;
 

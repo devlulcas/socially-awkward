@@ -1,5 +1,5 @@
-import { fetchThenParse } from "./fetch-then-parse";
-import { userOutputSchema } from "./outputs/user.output";
+import { fetchThenParse } from './fetch-then-parse';
+import { authApiResponseSchema } from './outputs/auth.output';
 
 export class AuthModule {
   constructor(private readonly url: string) {}
@@ -12,11 +12,11 @@ export class AuthModule {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(input),
       },
-      schema: userOutputSchema,
+      schema: authApiResponseSchema,
     });
   }
 
-  async signIn(input: { email: string; password: string }) {
+  async signIn(input: { username: string; password: string }) {
     return fetchThenParse({
       input: `${this.url}/auth/sign-in`,
       init: {
@@ -24,7 +24,7 @@ export class AuthModule {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(input),
       },
-      schema: userOutputSchema,
+      schema: authApiResponseSchema,
     });
   }
 

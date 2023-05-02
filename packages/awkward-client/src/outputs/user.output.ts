@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { wrapDataSchema } from './api';
 
 export const simpleUserOutputSchema = z.object({
   id: z.string(),
@@ -16,5 +17,8 @@ export const userOutputSchema = z
   })
   .merge(simpleUserOutputSchema);
 
-
 export type UserOutput = z.infer<typeof userOutputSchema>;
+
+export const userApiResponseSchema = wrapDataSchema(userOutputSchema);
+
+export type UserApiResponse = z.infer<typeof userApiResponseSchema>;
