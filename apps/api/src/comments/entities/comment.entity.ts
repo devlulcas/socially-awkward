@@ -15,17 +15,17 @@ export class Comment {
     type: {
       _id: String,
       username: String,
-      profilePicture: String,
+      avatar: String,
     },
   })
   author: {
     _id: string;
     username: string;
-    profilePicture: string;
+    avatar: string;
   };
 
   @Prop({ required: true })
-  content: string;
+  body: string;
 
   @Prop({ default: Date.now })
   createdAt: Date;

@@ -7,12 +7,16 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import {
+  CommentApiResponse,
+  CommentArrayApiResponse,
+  UserOutput,
+} from 'awkward-client';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Cookies } from 'src/common/http/cookies';
+import { CommentMapper } from './comments.mapper';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
-import { Cookies } from 'src/common/http/cookies';
-import { OutputUserDto } from 'src/users/dto/output-user.dto';
-import { CommentMapper } from './comments.mapper';
 
 @Controller('comments')
 export class CommentsController {
@@ -22,15 +26,17 @@ export class CommentsController {
   @Post()
   async create(
     @Body() createCommentDto: CreateCommentDto,
-    @Cookies('user') user: OutputUserDto,
-  ) {
+    @Cookies('user') user: UserOutput,
+  ): Promise<CommentApiResponse> {
     const created = this.commentsService.create(createCommentDto, user.id);
 
     return { data: CommentMapper.toOutputCommentDto(await created) };
   }
 
   @Get(':post_id')
-  async findAll(@Param('post_id') postId: string) {
+  async findAll(
+    @Param('post_id') postId: string,
+  ): Promise<CommentArrayApiResponse> {
     const posts = this.commentsService.findAll(postId);
 
     return { data: (await posts).map(CommentMapper.toOutputCommentDto) };
@@ -41,7 +47,7 @@ export class CommentsController {
   async remove(
     @Param('post_id') postId: string,
     @Param('comment_id') commentId: string,
-  ) {
+  ): Promise<CommentApiResponse> {
     const deleted = await this.commentsService.remove(postId, commentId);
 
     return { data: CommentMapper.toOutputCommentDto(deleted) };

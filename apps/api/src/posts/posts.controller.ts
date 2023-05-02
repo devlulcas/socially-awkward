@@ -10,9 +10,13 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import {
+  PostApiResponse,
+  PostArrayApiResponse,
+  UserOutput,
+} from 'awkward-client';
 import { AuthGuard } from '../auth/auth.guard';
 import { Cookies } from '../common/http/cookies';
-import { OutputUserDto } from '../users/dto/output-user.dto';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostMapper } from './post.mapper';
 import { PostsService } from './posts.service';
@@ -26,8 +30,8 @@ export class PostsController {
   @Post()
   async create(
     @Body() createPostDto: CreatePostDto,
-    @Cookies('user') user: OutputUserDto,
-  ) {
+    @Cookies('user') user: UserOutput,
+  ): Promise<PostApiResponse> {
     const post = await this.postsService.create(createPostDto, user.id);
 
     return { data: PostMapper.toOutputPostDto(post) };
@@ -35,7 +39,7 @@ export class PostsController {
 
   @HttpCode(HttpStatus.OK)
   @Get()
-  async findAll() {
+  async findAll(): Promise<PostArrayApiResponse> {
     const posts = await this.postsService.findAll();
 
     return { data: posts.map(PostMapper.toOutputPostDto) };
@@ -43,7 +47,7 @@ export class PostsController {
 
   @HttpCode(HttpStatus.OK)
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<PostApiResponse> {
     const post = await this.postsService.findOne(id);
 
     if (!post) {
@@ -56,19 +60,17 @@ export class PostsController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(AuthGuard)
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<void> {
     const post = await this.postsService.remove(id);
 
     if (!post) {
       throw new NotFoundException(`Post with id ${id} not found`);
     }
-
-    return { data: null };
   }
 
   @HttpCode(HttpStatus.OK)
   @Post(':id/like')
-  async like(@Param('id') id: string) {
+  async like(@Param('id') id: string): Promise<PostApiResponse> {
     const post = await this.postsService.like(id);
 
     if (!post) {
@@ -80,7 +82,7 @@ export class PostsController {
 
   @HttpCode(HttpStatus.OK)
   @Post(':id/unlike')
-  async unlike(@Param('id') id: string) {
+  async unlike(@Param('id') id: string): Promise<PostApiResponse> {
     const post = await this.postsService.unlike(id);
 
     if (!post) {

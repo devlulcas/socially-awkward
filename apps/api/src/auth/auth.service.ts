@@ -1,14 +1,14 @@
 import {
+  BadRequestException,
   Injectable,
   UnauthorizedException,
-  BadRequestException,
 } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { AuthOutputDto } from './dto/auth-output.dto';
-import { Password } from '../users/value-objects/password';
 import { JwtService } from '@nestjs/jwt';
-import { SignUpDto } from './dto/sign-up.dto';
+import { AuthOutput } from 'awkward-client';
+import { UsersService } from '../users/users.service';
+import { Password } from '../users/value-objects/password';
 import { SignInDto } from './dto/sign-in.dto';
+import { SignUpDto } from './dto/sign-up.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +17,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signUp(signUpDto: SignUpDto): Promise<AuthOutputDto> {
+  async signUp(signUpDto: SignUpDto): Promise<AuthOutput> {
     const user = await this.usersService.findOneByUsername(signUpDto.username);
 
     if (user) {
@@ -35,6 +35,7 @@ export class AuthService {
     const payload = {
       username: newUser.username,
       sub: newUser._id,
+      avatar: newUser.avatar,
     };
 
     const token = await this.jwtService.signAsync(payload);
@@ -42,7 +43,7 @@ export class AuthService {
     return { payload, token };
   }
 
-  async signIn(signInDto: SignInDto): Promise<AuthOutputDto> {
+  async signIn(signInDto: SignInDto): Promise<AuthOutput> {
     const user = await this.usersService.findOneByUsername(signInDto.username);
 
     if (!user) {
@@ -61,6 +62,7 @@ export class AuthService {
     const payload = {
       username: user.username,
       sub: user._id,
+      avatar: user.avatar,
     };
 
     const token = await this.jwtService.signAsync(payload);

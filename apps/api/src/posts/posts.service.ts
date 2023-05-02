@@ -24,7 +24,7 @@ export class PostsService {
       author: {
         _id: user._id,
         username: user.username,
-        profilePicture: user.profilePicture,
+        avatar: user.avatar,
       },
     });
   }

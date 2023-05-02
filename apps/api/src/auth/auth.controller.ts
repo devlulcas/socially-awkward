@@ -6,10 +6,11 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { SignUpDto } from './dto/sign-up.dto';
-import { SignInDto } from './dto/sign-in.dto';
+import { AuthApiResponse } from 'awkward-client';
 import { Response } from 'express';
+import { AuthService } from './auth.service';
+import { SignInDto } from './dto/sign-in.dto';
+import { SignUpDto } from './dto/sign-up.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -20,7 +21,7 @@ export class AuthController {
   async signUp(
     @Body() signUpDto: SignUpDto,
     @Res({ passthrough: true }) response: Response,
-  ) {
+  ): Promise<AuthApiResponse> {
     const signUpResult = await this.authService.signUp(signUpDto);
 
     this.attachTokenToCookie(signUpResult.token, response);
@@ -33,7 +34,7 @@ export class AuthController {
   async signIn(
     @Body() signInDto: SignInDto,
     @Res({ passthrough: true }) response: Response,
-  ) {
+  ): Promise<AuthApiResponse> {
     const signInResult = await this.authService.signIn(signInDto);
 
     this.attachTokenToCookie(signInResult.token, response);
@@ -50,8 +51,8 @@ export class AuthController {
   private attachTokenToCookie(token: string, response: Response): void {
     response.cookie('token', token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      path: '/',
+      maxAge: 1000 * 60 * 60 * 24,
     });
   }
 }

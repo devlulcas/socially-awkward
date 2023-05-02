@@ -12,20 +12,20 @@ export class Post {
     type: {
       _id: String,
       username: String,
-      profilePicture: String,
+      avatar: String,
     },
   })
   author: {
     _id: string;
     username: string;
-    profilePicture: string;
+    avatar: string;
   };
 
   @Prop({ required: true })
   title: string;
 
   @Prop({ required: true })
-  content: string;
+  body: string;
 
   @Prop({ default: 0 })
   likes: number;

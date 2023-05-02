@@ -19,10 +19,13 @@ export class UsersService {
   }
 
   async create(inputUser: CreateUserDto): Promise<User> {
+    const avatar = `https://avatars.dicebear.com/api/avataaars/${inputUser.username}.svg`;
+
     return this.userModel.create({
       username: inputUser.username,
       email: inputUser.email,
       password: inputUser.password.hashedValue,
+      avatar: avatar,
     });
   }
 }

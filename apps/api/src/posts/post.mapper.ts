@@ -1,20 +1,20 @@
-import { OutputPostDto } from './dto/output-post.dto';
+import { PostOutput } from 'awkward-client';
 import { Post } from './entities/post.entity';
 
 export class PostMapper {
-  static toOutputPostDto(post: Post): OutputPostDto {
+  static toOutputPostDto(post: Post): PostOutput {
     return {
       id: post._id,
       author: {
         id: post.author._id,
         username: post.author.username,
-        profilePicture: post.author.profilePicture,
+        avatar: post.author.avatar,
       },
       title: post.title,
-      content: post.content,
+      body: post.body,
       likes: post.likes,
-      createdAt: post.createdAt,
-      updatedAt: post.updatedAt,
+      createdAt: post.createdAt.toISOString(),
+      updatedAt: post.updatedAt.toISOString(),
     };
   }
 }

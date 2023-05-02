@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateCommentDto } from './dto/create-comment.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Comment } from './entities/comment.entity';
 import { Model } from 'mongoose';
-import { PostsService } from 'src/posts/posts.service';
-import { UsersService } from 'src/users/users.service';
+import { PostsService } from '../posts/posts.service';
+import { UsersService } from '../users/users.service';
+import { CreateCommentDto } from './dto/create-comment.dto';
+import { Comment } from './entities/comment.entity';
 
 @Injectable()
 export class CommentsService {
@@ -35,7 +35,7 @@ export class CommentsService {
       author: {
         _id: commenter._id,
         username: commenter.username,
-        profilePicture: commenter.profilePicture,
+        avatar: commenter.avatar,
       },
     });
   }

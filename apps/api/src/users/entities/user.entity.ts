@@ -17,7 +17,7 @@ export class User {
   username: string;
 
   @Prop()
-  profilePicture: string;
+  avatar: string;
 
   @Prop({ default: Date.now })
   createdAt: Date;
