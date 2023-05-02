@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 type BaseButtonProps = {
   variant?: 'primary' | 'secondary';
   children?: React.ReactNode;
+  disabled?: boolean;
 };
 
 type ButtonAsButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -22,6 +23,7 @@ export function Button(props: ButtonProps) {
   const style = clsx('px-4 py-2',{
     'bg-primary-600 text-primary-50': variant === 'primary',
     'bg-primary-700 text-primary-200': variant === 'secondary',
+    "bg-gray-300 text-gray-700": props?.disabled,
   }, className)
 
   if (props.as === 'a') {

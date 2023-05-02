@@ -1,13 +1,12 @@
+import { CommentOutput } from 'awkward-client';
 import clsx from 'clsx';
 
 type CommentProps = {
-  avatar: string;
-  content: string;
-  author: string;
+  data: CommentOutput;
   isAuthor: boolean;
 };
 
-export function Comment({ author, avatar, content, isAuthor }: CommentProps) {
+export function Comment({ data, isAuthor }: CommentProps) {
   return (
     <div
       className={clsx(
@@ -15,11 +14,15 @@ export function Comment({ author, avatar, content, isAuthor }: CommentProps) {
         isAuthor && 'bg-primary-950'
       )}
     >
-      <img className="h-10 aspect-square" src={avatar} alt="avatar" />
+      <img
+        className="h-10 aspect-square"
+        src={data.author.avatar}
+        alt="avatar"
+      />
 
       <div>
-        <p className="font-bold">{author}</p>
-        <p className="p-2 mt-2">{content}</p>
+        <p className="font-bold">{data.author.username}</p>
+        <p className="p-2 mt-2">{data.body}</p>
       </div>
     </div>
   );
