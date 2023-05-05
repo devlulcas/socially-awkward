@@ -36,13 +36,19 @@ caddy start
 
 - Access the project at [https://socially-awkward.localhost/](https://socially-awkward.localhost/)
 
+```mermaid
+graph LR;
+  A[APP] --> B[https://socially-awkward.localhost] 
+  B -- /api* --> D[API] --> E[http://localhost:3000];
+  B -- /* --> C[WEB] --> F[http://localhost:5173];
 ```
-https://socially-awkward.localhost/   -> http://localhost:5173 (apps/web)
 
-https://socially-awkward.localhost/api  -> http://localhost:3000 (apps/api)
-```
 
 Caddy does a reverse proxy to the apps.
+
+Every request that hits the `/api/*` path is redirected to the API app.
+
+Every other request is redirected to the web app.
 
 ## MORE
 
@@ -68,7 +74,7 @@ For the API, I'm trying out [NestJS](https://nestjs.com/) and [MongoDB](https://
 
 I'm using [Docker](https://www.docker.com/) with [Docker Compose](https://docs.docker.com/compose/) to run the DB.
 
-For the web app, I'm using [Vite](https://vitejs.dev/) with [React](https://react.dev/). The routing is handled by [React Router](https://reactrouter.com/) (as well as the data fetching).
+For the web app, I'm using [Vite](https://vitejs.dev/) with [React](https://react.dev/). The routing is handled by [React Router](https://reactrouter.com/) and the data fetching is done with [React Query](https://react-query.tanstack.com/).
 
 The styling is done with [TailwindCSS](https://tailwindcss.com/) (I've been learning it for a while now and I'm really enjoying it).
 
@@ -95,6 +101,4 @@ There are a lot of things todo and this is not a real project, so I'm not sure i
 - [ ] Finish the frontend
 - [ ] Guarantee that the user can only delete its own posts and comments
 - [ ] Add a way to upload images
-- [ ] Make the AwkwardClient better with a corerent API and way to handle errors
 - [ ] Add pagination to the posts and comments
-
