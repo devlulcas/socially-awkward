@@ -9,11 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "awkward-client": "workspace:*",
     "clsx": "^1.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.10.0",
-    "awkward-client": "workspace:*"
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.10.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

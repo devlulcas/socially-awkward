@@ -9,37 +9,40 @@ import {
 import { Button } from '../../../shared/components/button';
 import { apiClient } from '../../../shared/config';
 import { InputField } from '../components/input-field';
-
-export async function action({ request }: ActionFunctionArgs) {
-  const formData = await request.formData();
-
-  const username = formData.get('username')?.toString();
-  const password = formData.get('password')?.toString();
-  const email = formData.get('email')?.toString();
-
-  if (!username || !password) {
-    throw new Error('Username and password are required');
-  }
-
-  // Register
-  if (email) {
-    const auth = await apiClient.auth.signUp({ email, password, username });
-    return auth.data;
-  }
-
-  // Login
-  const auth = await apiClient.auth.signIn({ username, password });
-  return auth.data;
-}
+import { useSignInMutation } from '../hooks/use-sign-in-mutation';
+import { useSignUpMutation } from '../hooks/use-sign-up-mutation';
 
 export default function AuthPage() {
+  const signInMutation = useSignInMutation();
+  const signUpMutation = useSignUpMutation();
+
   const [isRegister, setIsRegister] = useState(false);
 
-  const navigation = useNavigation();
-
-  const busy = navigation.state === 'submitting';
-
   const authType = isRegister ? 'Register' : 'Login';
+
+  const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
+
+    const formData = new FormData(ev.currentTarget);
+
+    const username = formData.get('username')?.toString();
+
+    const password = formData.get('password')?.toString();
+
+    const email = formData.get('email')?.toString();
+
+    if (!username || !password) {
+      throw new Error('Username and password are required');
+    }
+
+    // Register
+    if (email) {
+      return signUpMutation.mutate({ email, password, username });
+    }
+
+    // Login
+    return signInMutation.mutate({ username, password });
+  };
 
   return (
     <div className="h-screen fixed top-0 w-full grid place-items-center">
@@ -96,8 +99,13 @@ export default function AuthPage() {
         />
 
         <div className="flex justify-end mt-4">
-          <Button disabled={busy} as="button" type="submit" variant="primary">
-            {busy ? '...' : authType}
+          <Button
+            as="button"
+            type="submit"
+            variant="primary"
+            isLoading={signInMutation.isLoading ?? signUpMutation.isLoading}
+          >
+            Enviar
           </Button>
         </div>
       </Form>

@@ -1,8 +1,9 @@
 import { PostOutput } from 'awkward-client';
 import { Button } from '../../../shared/components/button';
+import { FeedbackButton } from './feedback-button';
 
 type PostProps = {
-  data: PostOutput
+  data: PostOutput;
 };
 
 export function Post({ data }: PostProps) {
@@ -26,13 +27,7 @@ export function Post({ data }: PostProps) {
       </div>
 
       <div className="flex gap-9">
-        <Button as="button" className="relative">
-          <span className="text-primary-200">Like</span>
-
-          <span className="text-primary-200 text-xs font-semibold bg-primary-700 px-1 absolute top-0 border-[1px] border-primary-50">
-            {data.likes}
-          </span>
-        </Button>
+        <FeedbackButton post={data} />
 
         <Button as="a" to={`/posts/${data.id}`}>
           See more
