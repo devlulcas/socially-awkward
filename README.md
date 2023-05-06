@@ -8,7 +8,7 @@ I'm building this project to learn more about some technologies I'm interested i
 
 > warning: This is not a real project, so I'm not sure if I'll finish it. In the current moment this is just a playground, full of bugs and bad practices.
 
-![feed](.github/images/feed.png)
+![preview](.github/images/preview.png)
 ![post](.github/images/post.png)
 ![register](.github/images/register.png)
 ![profile](.github/images/profile.png)
