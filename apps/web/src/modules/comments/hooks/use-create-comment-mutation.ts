@@ -15,7 +15,6 @@ export function useCreateCommentMutation(postId: string) {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [COMMENTS_QUERY_KEY, postId],
-        exact: true,
       });
     },
   });

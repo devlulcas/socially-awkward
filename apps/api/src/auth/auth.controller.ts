@@ -46,6 +46,10 @@ export class AuthController {
   @Post('sign-out')
   async signOut(@Res({ passthrough: true }) response: Response) {
     response.clearCookie('token');
+
+    return {
+      data: null,
+    };
   }
 
   private attachTokenToCookie(token: string, response: Response): void {

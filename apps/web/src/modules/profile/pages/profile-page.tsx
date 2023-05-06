@@ -16,16 +16,16 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto pt-2 pb-4">
-      <div>
+    <div className="h-[92vh] grid place-items-center">
+      <div className='flex items-center justify-center flex-col'>
         <img
-          className="h-24 aspect-square"
+          className="h-24 aspect-square rounded-full bg-primary-300"
           src={profileQuery.data.avatar}
           alt="avatar"
           loading="lazy"
         />
 
-        <h1 className="text-4xl font-bold">{profileQuery.data.username}</h1>
+        <h1 className="text-4xl font-bold mt-2">{profileQuery.data.username}</h1>
       </div>
     </div>
   );

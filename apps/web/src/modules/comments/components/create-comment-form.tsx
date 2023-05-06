@@ -18,13 +18,14 @@ export function CreateCommentForm({ postId }: CreateCommentFormProps) {
     if (!body) return;
 
     createCommentMutation.mutate(body);
+
+    ev.currentTarget.reset();
   };
 
   return (
     <form
       onSubmit={handleSubmit}
       method="POST"
-      action="api/comments"
       className="flex flex-col gap-2 my-4"
     >
       <textarea

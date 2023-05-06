@@ -37,9 +37,9 @@ export class CommentsController {
   async findAll(
     @Param('post_id') postId: string,
   ): Promise<CommentArrayApiResponse> {
-    const posts = this.commentsService.findAll(postId);
+    const comments = await this.commentsService.findAll(postId);
 
-    return { data: (await posts).map(CommentMapper.toOutputCommentDto) };
+    return { data: comments.map(CommentMapper.toOutputCommentDto) };
   }
 
   @UseGuards(AuthGuard)

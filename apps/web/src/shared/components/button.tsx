@@ -19,7 +19,13 @@ type ButtonAsLinkProps = React.ComponentProps<typeof Link> & {
 type ButtonProps = BaseButtonProps & (ButtonAsButtonProps | ButtonAsLinkProps);
 
 export function Button(props: ButtonProps) {
-  const { variant = 'primary', className, children, isLoading } = props;
+  const {
+    variant = 'primary',
+    isLoading,
+    children,
+    className,
+    ...rest
+  } = props;
 
   const style = clsx(
     'px-4 py-2',
@@ -33,20 +39,16 @@ export function Button(props: ButtonProps) {
 
   const showChildren = isLoading ? '...' : children;
 
-  if (props.as === 'a') {
+  if (rest.as === 'a') {
     return (
-      <Link className={style} {...props}>
+      <Link className={style} {...rest}>
         {showChildren}
       </Link>
     );
   }
 
   return (
-    <button
-      className={style}
-      {...props}
-      disabled={props?.disabled ?? isLoading}
-    >
+    <button className={style} {...rest} disabled={props?.disabled ?? isLoading}>
       {showChildren}
     </button>
   );

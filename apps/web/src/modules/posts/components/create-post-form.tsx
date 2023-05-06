@@ -17,13 +17,14 @@ export function CreatePostForm() {
     if (!title || !body) return;
 
     createPostMutation.mutate({ title, body });
+
+    ev.currentTarget.reset();
   };
 
   return (
     <form
       onSubmit={handleSubmit}
       method="POST"
-      action="/api/posts"
       className="flex flex-col gap-2 my-4"
     >
       <InputField

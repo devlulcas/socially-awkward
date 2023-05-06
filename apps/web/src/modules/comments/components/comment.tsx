@@ -10,20 +10,21 @@ export function Comment({ data, isAuthor }: CommentProps) {
   return (
     <div
       className={clsx(
-        'flex gap-2 bg-primary-800',
-        isAuthor && 'bg-primary-950'
+        'bg-primary-800 p-2',
+        isAuthor && 'bg-primary-900'
       )}
     >
-      <img
-        className="h-10 aspect-square"
-        src={data.author.avatar}
-        alt="avatar"
-      />
+      <div className='flex items-center gap-2 p-1 bg-primary-700'>
+        <img
+          className="h-10 aspect-square bg-primary-400"
+          src={data.author.avatar}
+          alt="avatar"
+        />
 
-      <div>
         <p className="font-bold">{data.author.username}</p>
-        <p className="p-2 mt-2">{data.body}</p>
       </div>
+
+      <p className="mt-2">{data.body}</p>
     </div>
   );
 }

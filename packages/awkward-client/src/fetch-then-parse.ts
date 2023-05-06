@@ -17,7 +17,15 @@ export async function fetchThenParse<T>(
     throw new Error(json.error + ': ' + json.message);
   }
 
-  if (!options.schema) return json;
+  if (!options.schema) {
+    if (typeof json !== 'object') {
+      return {
+        data: json,
+      } as any
+    }
+
+    return json;
+  }
 
   return options.schema.parse(json);
 }

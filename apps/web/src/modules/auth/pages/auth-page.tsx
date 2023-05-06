@@ -1,13 +1,6 @@
 import clsx from 'clsx';
 import { useState } from 'react';
-import {
-  ActionFunctionArgs,
-  Form,
-  useNavigation,
-  useRouteError,
-} from 'react-router-dom';
 import { Button } from '../../../shared/components/button';
-import { apiClient } from '../../../shared/config';
 import { InputField } from '../components/input-field';
 import { useSignInMutation } from '../hooks/use-sign-in-mutation';
 import { useSignUpMutation } from '../hooks/use-sign-up-mutation';
@@ -17,8 +10,6 @@ export default function AuthPage() {
   const signUpMutation = useSignUpMutation();
 
   const [isRegister, setIsRegister] = useState(false);
-
-  const authType = isRegister ? 'Register' : 'Login';
 
   const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
@@ -30,6 +21,8 @@ export default function AuthPage() {
     const password = formData.get('password')?.toString();
 
     const email = formData.get('email')?.toString();
+
+    console.table({ username, password, email });
 
     if (!username || !password) {
       throw new Error('Username and password are required');
@@ -46,7 +39,11 @@ export default function AuthPage() {
 
   return (
     <div className="h-screen fixed top-0 w-full grid place-items-center">
-      <Form action="/login" method="post" className="bg-primary-700 p-5 ">
+      <form
+        onSubmit={handleSubmit}
+        method="POST"
+        className="bg-primary-700 p-5 "
+      >
         <div className="flex w-full">
           <button
             className={clsx(
@@ -108,7 +105,7 @@ export default function AuthPage() {
             Enviar
           </Button>
         </div>
-      </Form>
+      </form>
     </div>
   );
 }

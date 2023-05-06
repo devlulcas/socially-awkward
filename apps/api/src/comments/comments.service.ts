@@ -41,7 +41,7 @@ export class CommentsService {
   }
 
   async findAll(postId: string): Promise<Comment[]> {
-    return this.commentModel.find({ post: postId }).exec();
+    return this.commentModel.find({ postId: postId }).exec();
   }
 
   async remove(postId: string, id: string): Promise<Comment> {
