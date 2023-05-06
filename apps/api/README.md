@@ -40,7 +40,7 @@ Content-Type: application/json
   "email": "johndoe@test.com",
   "password": "password"
 }
-````
+```
 
 ```http
 HTTP/1.1 201 Created
@@ -51,7 +51,8 @@ Set-Cookie: token=jwt_token; Path=/; HttpOnly; Secure
 	"data": {
 		"payload": {
 			"username": "johndoe",
-			"sub": "eeb9f55a-d858-4e49-929a-58ce5d48c15d"
+			"sub": "eeb9f55a-d858-4e49-929a-58ce5d48c15d",
+			"avatar": "https://avatars.dicebear.com/api/avataaars/johndoe.svg"
 		},
 		"token": "jwt"
 	}
@@ -81,7 +82,8 @@ Set-Cookie: token=jwt_token; Path=/; HttpOnly; Secure
 	"data": {
 		"payload": {
 			"username": "johndoe",
-			"sub": "eeb9f55a-d858-4e49-929a-58ce5d48c15d"
+			"sub": "eeb9f55a-d858-4e49-929a-58ce5d48c15d",
+			"avatar": "https://avatars.dicebear.com/api/avataaars/johndoe.svg"
 		},
 		"token": "jwt"
 	}
@@ -122,7 +124,8 @@ Content-Type: application/json
 	"data": {
 		"id": "6444ac0a988c82b67edd7cf5",
 		"username": "johndoe",
-		"email": "johndoe@test.com"
+		"email": "johndoe@test.com",
+		"avatar": "https://avatars.dicebear.com/api/avataaars/johndoe.svg"
 	}
 }
 ```
@@ -146,18 +149,15 @@ Content-Type: application/json
 		{
 			"id": "ad9ab482-de7d-4fd4-b22f-9fba89d442f0",
 			"title": "My first post",
-			"content": "This is my first post",
+			"body": "This is my first post",
 			"likes": 0,
 			"createdAt": "2023-04-23T05:07:38.502Z",
-			"updatedAt": "2023-04-23T05:07:38.502Z"
-		},
-		{
-			"id": "3ce554e2-dbe7-4420-8a17-727c8570abf3",
-			"title": "My second post",
-			"content": "This is my second post",
-			"likes": 0,
-			"createdAt": "2023-04-23T05:16:28.692Z",
-			"updatedAt": "2023-04-23T05:16:28.692Z"
+			"updatedAt": "2023-04-23T05:07:38.502Z",
+			"author": {
+				"id": "6444ac0a988c82b67edd7cf5",
+				"username": "johndoe",
+				"avatar": "https://avatars.dicebear.com/api/avataaars/johndoe.svg"
+			}
 		}
 	]
 }
@@ -179,11 +179,16 @@ Content-Type: application/json
 	"data": {
 		"id": "ad9ab482-de7d-4fd4-b22f-9fba89d442f0",
 		"title": "My first post",
-		"content": "This is my first post",
+		"body": "This is my first post",
 		"likes": 0,
 		"createdAt": "2023-04-23T05:07:38.502Z",
-		"updatedAt": "2023-04-23T05:07:38.502Z"
-	},
+		"updatedAt": "2023-04-23T05:07:38.502Z",
+		"author": {
+			"id": "6444ac0a988c82b67edd7cf5",
+			"username": "johndoe",
+			"avatar": "https://avatars.dicebear.com/api/avataaars/johndoe.svg"
+		}
+	}
 }
 ```
 
@@ -198,7 +203,7 @@ Content-Type: application/json
 
 {
   "title": "My first post",
-  "content": "This is my first post"
+  "body": "This is my first post"
 }
 ```
 
@@ -208,13 +213,17 @@ Content-Type: application/json
 
 {
 	"data": {
-		"id": "c3e23547-bde4-463c-8673-91f1bdf30e70",
-		"authorId": "eeb9f55a-d858-4e49-929a-58ce5d48c15d",
-		"title": "This is my first post",
-		"content": "This is my first post",
+		"id": "ad9ab482-de7d-4fd4-b22f-9fba89d442f0",
+		"title": "My first post",
+		"body": "This is my first post",
 		"likes": 0,
-		"createdAt": "2023-04-23T13:59:17.503Z",
-		"updatedAt": "2023-04-23T13:59:17.503Z"
+		"createdAt": "2023-04-23T05:07:38.502Z",
+		"updatedAt": "2023-04-23T05:07:38.502Z",
+		"author": {
+			"id": "6444ac0a988c82b67edd7cf5",
+			"username": "johndoe",
+			"avatar": "https://avatars.dicebear.com/api/avataaars/johndoe.svg"
+		}
 	}
 }
 ```
@@ -249,12 +258,17 @@ Content-Type: application/json
 
 {
 	"data": {
-		"id": "c3e23547-bde4-463c-8673-91f1bdf30e70",
-		"title": "This is my first post",
-		"content": "This is my first post",
+		"id": "ad9ab482-de7d-4fd4-b22f-9fba89d442f0",
+		"title": "My first post",
+		"body": "This is my first post",
 		"likes": 1,
-		"createdAt": "2023-04-23T13:59:17.503Z",
-		"updatedAt": "2023-04-23T14:01:15.356Z"
+		"createdAt": "2023-04-23T05:07:38.502Z",
+		"updatedAt": "2023-04-23T05:07:38.502Z",
+		"author": {
+			"id": "6444ac0a988c82b67edd7cf5",
+			"username": "johndoe",
+			"avatar": "https://avatars.dicebear.com/api/avataaars/johndoe.svg"
+		}
 	}
 }
 ```
@@ -262,7 +276,7 @@ Content-Type: application/json
 - Remove a like from a post
 
 ```http
-DELETE /api/v1/posts/c3e23547-bde4-463c-8673-91f1bdf30e70/like HTTP/1.1
+POST /api/v1/posts/c3e23547-bde4-463c-8673-91f1bdf30e70/unlike HTTP/1.1
 Host: https://api.socially-awkward.localhost/
 Cookie: token=jwt_token
 Accept: application/json
@@ -274,12 +288,17 @@ Content-Type: application/json
 
 {
 	"data": {
-		"id": "c3e23547-bde4-463c-8673-91f1bdf30e70",
-		"title": "This is my first post",
-		"content": "This is my first post",
+		"id": "ad9ab482-de7d-4fd4-b22f-9fba89d442f0",
+		"title": "My first post",
+		"body": "This is my first post",
 		"likes": 0,
-		"createdAt": "2023-04-23T13:59:17.503Z",
-		"updatedAt": "2023-04-23T14:01:15.356Z"
+		"createdAt": "2023-04-23T05:07:38.502Z",
+		"updatedAt": "2023-04-23T05:07:38.502Z",
+		"author": {
+			"id": "6444ac0a988c82b67edd7cf5",
+			"username": "johndoe",
+			"avatar": "https://avatars.dicebear.com/api/avataaars/johndoe.svg"
+		}
 	}
 }
 ```
@@ -301,20 +320,20 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-  data: [
-    {
-      "id": 1,
-      "content": "This is my first comment",
-      "created_at": "2023-01-01T00:00:00Z",
-      "updated_at": "2023-01-01T00:00:00Z"
-    },
-    {
-      "id": 2,
-      "content": "This is my second comment",
-      "created_at": "2023-01-01T00:00:00Z",
-      "updated_at": "2023-01-01T00:00:00Z"
-    }
-  ]
+	"data": [
+		{
+			"id": "bc6ab482-ae7d-3fd3-a42f-9fba89d447f1",
+			"postId": "ad9ab482-de7d-4fd4-b22f-9fba89d442f0",
+			"body": "This is my first post",
+			"createdAt": "2023-04-23T05:07:38.502Z",
+			"updatedAt": "2023-04-23T05:07:38.502Z",
+			"author": {
+				"id": "6444ac0a988c82b67edd7cf5",
+				"username": "johndoe",
+				"avatar": "https://avatars.dicebear.com/api/avataaars/johndoe.svg"
+			}
+		}
+	]
 }
 ```
 
@@ -328,7 +347,8 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "content": "This is my first comment on post 1"
+	"postId": "ad9ab482-de7d-4fd4-b22f-9fba89d442f0",
+  "body": "This is my first comment on post 1"
 }
 ```
 
@@ -337,12 +357,18 @@ HTTP/1.1 201 Created
 Content-Type: application/json
 
 {
-  data: {
-    "id": 1,
-    "content": "This is my first comment on post 1",
-    "created_at": "2023-01-01T00:00:00Z",
-    "updated_at": "2023-01-01T00:00:00Z"
-  }
+	"data": {
+		"id": "bc6ab482-ae7d-3fd3-a42f-9fba89d447f1",
+		"postId": "ad9ab482-de7d-4fd4-b22f-9fba89d442f0",
+		"body": "This is my first post",
+		"createdAt": "2023-04-23T05:07:38.502Z",
+		"updatedAt": "2023-04-23T05:07:38.502Z",
+		"author": {
+			"id": "6444ac0a988c82b67edd7cf5",
+			"username": "johndoe",
+			"avatar": "https://avatars.dicebear.com/api/avataaars/johndoe.svg"
+		}
+	}
 }
 ```
 
@@ -358,4 +384,3 @@ Accept: application/json
 ```http
 HTTP/1.1 204 No Content
 ```
-
